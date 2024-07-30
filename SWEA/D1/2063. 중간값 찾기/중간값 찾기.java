@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-class Solution // selection sort
+class Solution // bubble sort
 {
 	public static void main(String args[]) throws Exception
 	{
@@ -14,19 +14,19 @@ class Solution // selection sort
         str = br.readLine();
         st = new StringTokenizer(str);
         for(int i=0; i<N; i++) arr[i] = Integer.parseInt(st.nextToken());
-        selectionSort(arr);
+        bubbleSort(arr);
         System.out.println(arr[N/2]);
 	}
     
-    static void selectionSort(int[] arr) {
-        for(int i=0; i<arr.length; i++) {
-            int minIdx=i;
-            for(int j=i+1; j<arr.length; j++) {
-                if(arr[j]<arr[minIdx]) minIdx=j;
-            }
-            int tmp=arr[i];
-            arr[i]=arr[minIdx];
-            arr[minIdx]=tmp;
-        }
-    }
+    static void bubbleSort(int[] arr) {
+        for(int i=arr.length-1; i>0; i--) {
+            for(int j=0; j<i; j++) {
+                if(arr[j]>arr[j+1]) {
+                    int tmp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = tmp;
+            	}
+       		}
+    	}
+	}
 }
