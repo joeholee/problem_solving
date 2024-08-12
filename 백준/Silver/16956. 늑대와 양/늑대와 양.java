@@ -22,6 +22,7 @@ public class Main {
 			char[] status = br.readLine().toCharArray();
 			for(int c=0; c<C; c++) {
 				farm[r][c] = status[c];
+                // 늑대면 큐에 넣어준다
 				if(farm[r][c]=='W') q.add(new int[]{r,c});
 			}
 		}
@@ -44,6 +45,7 @@ public class Main {
 			for(int dir=0; dir<4; dir++) {
 				int nr = r+dr[dir];
 				int nc = c+dc[dir];
+                // 늑대 주변에 울타리 치기
 				if(nr>=0 && nr<R && nc>=0 && nc<C) {
 					if(farm[nr][nc]=='.') farm[nr][nc]='D';
 					if(farm[nr][nc]=='S') {
