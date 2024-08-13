@@ -6,11 +6,9 @@ class Solution
 	public static void main(String args[]) throws Exception
 	{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuffer sb = new StringBuffer();
         int T = Integer.parseInt(br.readLine());
 		for(int test_case = 1; test_case <= T; test_case++)
 		{
-            sb.setLength(0);
             String[] time = br.readLine().split(" ");
             int h1 = Integer.parseInt(time[0]);
             int m1 = Integer.parseInt(time[1]);
@@ -23,8 +21,7 @@ class Solution
                 ansH+=1;
             }
             if(ansH>12) ansH-=12;
-            sb.append("#"+test_case+" "+ansH+" "+ansM);
-            System.out.println(sb);
+            System.out.println("#"+test_case+" "+ansH+" "+ansM);
 		}
 	}
 }
