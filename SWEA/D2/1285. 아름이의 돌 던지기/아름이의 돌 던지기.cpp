@@ -4,6 +4,8 @@ int N,arr[1001],near,cnt;
 
 int main(int argc, char** argv)
 {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
 	int test_case;
 	int T;
 	cin>>T;
