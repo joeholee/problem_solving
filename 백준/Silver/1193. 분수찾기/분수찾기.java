@@ -1,10 +1,13 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
 
 public class Main {
-	static Scanner sc = new Scanner(System.in);
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static StringBuilder sb = new StringBuilder();
 	static int div,den,tmp=1;
-	public static void main(String[] args) {
-		int X = sc.nextInt();
+	public static void main(String[] args) throws IOException {
+		int X = Integer.parseInt(br.readLine());
 		while(X>0) {
 			if(tmp%2==0) {
 				div=0;
@@ -31,6 +34,7 @@ public class Main {
 			}
 			tmp++;
 		}
-		System.out.print(div+"/"+den);
+		sb.append(div).append("/").append(den);
+		System.out.print(sb);
 	}
 }
