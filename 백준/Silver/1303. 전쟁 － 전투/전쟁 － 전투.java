@@ -24,7 +24,9 @@ public class Main {
 			for(int c=0; c<N; c++) war[r][c]=row[c];
 		}
 		for(int r=0; r<M; r++) {
-			for(int c=0; c<N; c++) bfs(r,c);
+			for(int c=0; c<N; c++) {
+                if(!vis[r][c]) bfs(r,c);
+            }
 		}
 		System.out.print(w+" "+b);
 	}
@@ -32,7 +34,6 @@ public class Main {
 	static void bfs(int r, int c) {
 		int tmp=0;
 		char col=war[r][c];
-		if(vis[r][c]) return;
 		q.add(new int[] {r,c});
 		vis[r][c]=true;
 		while(!q.isEmpty()) {
