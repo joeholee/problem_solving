@@ -23,14 +23,18 @@ class Solution
 			for(int r=0; r<N-M+1; r++) {
 				for(int c=0; c<N-M+1; c++) {
 					int tmp=0;
-					for(int i=0; i<M; i++) {
-						for(int j=0; j<M; j++) tmp+=fly[r+i][c+j];
-						ans = Math.max(ans,tmp);
+					for(int dr=0; dr<M; dr++) {
+						for(int dc=0; dc<M; dc++) {
+							int nr=r+dr;
+							int nc=c+dc;
+							tmp+=fly[nr][nc];
+						}
 					}
+					ans = Math.max(ans,tmp);
 				}
 			}
 			System.out.println("#"+test_case+" "+ans);
-            ans=0;
+			ans=0;
 		}
 	}
 }
