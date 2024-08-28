@@ -1,4 +1,5 @@
 import java.util.Scanner;
+ 
 class Solution
 {
     public static void main(String args[]) throws Exception
@@ -9,12 +10,20 @@ class Solution
             int T = sc.nextInt();
             int N = sc.nextInt();
             int M = sc.nextInt();
-            System.out.println("#"+T+" "+pow(N,M));
+            int ans = rec(N,M);
+            System.out.println("#"+T+" "+ans);
         }
     }
      
-    static int pow(int N, int M) {
+    static int rec(int N, int M) {
         if(M==1) return N;
-        return N*pow(N,M-1);
+        if(M%2==0) {
+            int tmp=rec(N,M/2);
+            return tmp*tmp;
+        }
+        else {
+            int tmp=rec(N,(M-1)/2);
+            return N*tmp*tmp;
+        }
     }
 }
