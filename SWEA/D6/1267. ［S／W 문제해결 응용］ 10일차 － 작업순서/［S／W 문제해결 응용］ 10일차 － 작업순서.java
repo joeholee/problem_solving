@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Queue;
-import java.util.LinkedList;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
 
@@ -13,7 +12,8 @@ class Solution
 	static int V,E;
 	static int[][] task;
 	static int[] degree;
-	static Queue<Integer> q;
+	static boolean[] vis;
+	static Stack<Integer> ans;
 	
 	public static void main(String args[]) throws Exception
 	{
@@ -25,6 +25,8 @@ class Solution
 			E = Integer.parseInt(sz[1]);
 			task = new int[V+1][V+1];
 			degree = new int[V+1];
+			vis = new boolean[V+1];
+			ans = new Stack<>();
 			st = new StringTokenizer(br.readLine());
 			for(int i=0; i<E; i++) {
 				int from = Integer.parseInt(st.nextToken());
@@ -32,23 +34,20 @@ class Solution
 				task[from][to]=1;
 				degree[to]++;
 			}
-			q = new LinkedList<>();
 			for(int i=1; i<=V; i++) {
-				if(degree[i]==0) q.add(i);
+				if(degree[i]==0) dfs(i);
 			}
-			while(!q.isEmpty()) {
-				int cur = q.poll();
-				sb.append(cur).append(" ");
-				for(int i=1; i<=V; i++) {
-					if(task[cur][i]==1) {
-						degree[i]--;
-						task[cur][i]=0;
-						if(degree[i]==0) q.add(i);
-					}
-				}
-			}
+			while(!ans.empty()) sb.append(ans.pop()).append(" ");
 			System.out.println(sb);
 			sb.setLength(0);
 		}
+	}
+	
+	static void dfs(int cur) {
+		vis[cur]=true;
+		for(int i=1; i<=V; i++) {
+			if(task[cur][i]==1 && !vis[i]) dfs(i);
+		}
+		ans.push(cur);
 	}
 }
