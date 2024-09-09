@@ -1,18 +1,24 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
-class Solution
-{
-	public static void main(String args[]) throws Exception
-	{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int T = Integer.parseInt(br.readLine());
-		for(int test_case = 1; test_case <= T; test_case++)
-		{
-            String[] input = br.readLine().split(" ");
-            int a = Integer.parseInt(input[0]);
-            int b = Integer.parseInt(input[1]);
-            System.out.println("#"+test_case+" "+a/b+" "+a%b);
+public class Solution {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
+		
+		
+		for (int t = 1; t <= T; t++) {
+			int a = sc.nextInt();
+			int b = sc.nextInt();
+			
+			int q = a/b;
+			int r = a%b;
+			
+			System.out.println("#"+t+" "+q+" "+r);
 		}
+		
+		
+		
+		
+		
 	}
 }
