@@ -1,12 +1,13 @@
-class Solution
-{
-	public static void main(String args[]) throws Exception
-	{
-        for(int i=0; i<5; i++) {
-            for(int j=0; j<i; j++) System.out.print("+");
-            System.out.print("#");
-            for(int j=4; j>i; j--) System.out.print("+");
-            System.out.println();
-        }
+public class Solution {
+	public static void main(String[] args) {
+		
+		for (int r = 0; r < 5; r++) {
+			for (int c = 0; c < 5; c++) {
+				if(r==c) {
+					System.out.print("#");
+				}else {System.out.print("+");}
+			}
+			System.out.println();
+		}
 	}
 }
