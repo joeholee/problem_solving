@@ -1,11 +1,14 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
-class Solution
-{
-	public static void main(String args[]) throws Exception
-	{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print(br.readLine().toUpperCase());
+public class Solution {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		String line = sc.next();
+		
+		String upper = line.toUpperCase();
+		
+		System.out.println(upper);
 	}
+
 }
