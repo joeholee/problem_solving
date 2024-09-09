@@ -1,15 +1,17 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.Scanner;
 
-class Solution
-{
-	public static void main(String args[]) throws Exception
-	{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int P = Integer.parseInt(st.nextToken());
-        int K = Integer.parseInt(st.nextToken());
-        System.out.print(Math.abs(P-K)+1);
+public class Solution {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int P = sc.nextInt();
+		int K = sc.nextInt();
+		
+		if(P >= K) {
+			System.out.println(P-K+1);
+		}else { 
+			System.out.println(999-K+P+1);
+			}
 	}
+
 }
