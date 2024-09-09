@@ -8,6 +8,7 @@ public class Main {
 	static int[] arr,num;
 	static boolean[] vis;
 	static int N,M;
+	static StringBuilder sb = new StringBuilder();
 	
 	public static void main(String[] args) throws IOException {
 		String[] sz = br.readLine().split(" ");
@@ -22,13 +23,14 @@ public class Main {
 		}
 		Arrays.sort(arr);
 		perm(0);
+		System.out.println(sb);
 	}
 	
 	static void perm(int cnt) {
 		int prev=-1;
 		if(cnt==M) {
-			for(int i=0; i<M; i++) System.out.print(num[i]+" ");
-			System.out.println();
+			for(int i=0; i<M; i++) sb.append(num[i]).append(" ");
+			sb.append("\n");
 			return;
 		}
 		for(int i=0; i<N; i++) {
