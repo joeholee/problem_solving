@@ -1,15 +1,20 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.Scanner;
 
-class Solution
-{
-	public static void main(String args[]) throws Exception
-	{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int A = Integer.parseInt(st.nextToken());
-        int B = Integer.parseInt(st.nextToken());
-        System.out.print((A+1-B)%3==0? 'B' : 'A');
+public class Solution {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int A = sc.nextInt();
+		int B = sc.nextInt();
+		
+		if(B!=1&&A>B) {
+			System.out.println("A");
+		}else if(A!=1&&B>A) {
+			System.out.println("B");
+		}else if(A==1&&B==3) {
+			System.out.println("A");
+		}else {System.out.println("B");}
+	
 	}
+
 }
