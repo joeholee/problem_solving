@@ -1,51 +1,44 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 class Solution
 {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	static int N,L,idx,ans;
-	static int[] T,K,selScore,selKcal;
+	static StringTokenizer st;
+	static StringBuilder sb = new StringBuilder();
+	static int N,L;
+	static int[] T,K;
+	static int[][] dp;
+	
 	public static void main(String args[]) throws Exception
 	{
-		int TC = Integer.parseInt(br.readLine());
-		for(int test_case = 1; test_case <= TC; test_case++)
+		int tc = Integer.parseInt(br.readLine());
+		for(int test_case = 1; test_case <= tc; test_case++)
 		{
-			String[] cond = br.readLine().split(" ");
-			N = Integer.parseInt(cond[0]);
-			L = Integer.parseInt(cond[1]);
-			T = new int[N];
-			K = new int[N];
-			selScore = new int[N];
-			selKcal = new int[N];
-			for(int i=0; i<N; i++) {
-				String[] info = br.readLine().split(" ");
-				T[i]=Integer.parseInt(info[0]);
-				K[i]=Integer.parseInt(info[1]);
+			st = new StringTokenizer(br.readLine());
+			N = Integer.parseInt(st.nextToken());
+			L = Integer.parseInt(st.nextToken());
+			dp = new int[N+1][L+1];
+			T = new int[N+1];
+			K = new int[N+1];
+			for(int i=1; i<=N; i++) {
+				st = new StringTokenizer(br.readLine());
+				T[i]=Integer.parseInt(st.nextToken());
+				K[i]=Integer.parseInt(st.nextToken());
 			}
-			powerset(0);
-			System.out.println("#"+test_case+" "+ans);
-			ans=0;
+			solve();
+			sb.append("#").append(test_case).append(" ").append(dp[N][L]).append("\n");
 		}
+		System.out.println(sb);
 	}
 	
-	static void powerset(int cnt) {
-		if(cnt==N) {
-			calcsum(selScore, selKcal);
-			return;
+	static void solve() {
+		for(int i=1; i<=N; i++) {
+			for(int j=1; j<=L; j++) {
+				if(K[i]>j) dp[i][j]=dp[i-1][j];
+				else dp[i][j]=Math.max(dp[i-1][j],dp[i-1][j-K[i]]+T[i]);
+			}
 		}
-		selScore[cnt]=T[cnt];
-		selKcal[cnt]=K[cnt];
-		powerset(cnt+1);
-		selScore[cnt]=0;
-		selKcal[cnt]=0;
-		powerset(cnt+1);
-	}
-	
-	static void calcsum(int[] selScore, int[] selKcal) {
-		int score=0,kcal=0;
-		for(int s : selScore) score+=s;
-		for(int k : selKcal) kcal+=k;
-		if(kcal<=L) ans = Math.max(ans,score);
 	}
 }
