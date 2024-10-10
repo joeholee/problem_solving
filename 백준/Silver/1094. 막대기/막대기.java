@@ -7,10 +7,6 @@ public class Main {
 	static int X,ans;
 	public static void main(String[] args) throws IOException {
 		X = Integer.parseInt(br.readLine());
-		while(X>0) {
-			if((X&1)==1) ans++;
-			X>>=1;
-		}
-		System.out.println(ans);
+		System.out.println(Integer.bitCount(X));
 	}
 }
