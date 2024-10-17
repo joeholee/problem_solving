@@ -5,33 +5,26 @@ import java.util.StringTokenizer;
 
 public class Main {
     static int[] dp;
+    static int[] memo;  // 메모이제이션 배열 추가
     static int nomarlCnt;
     static int dpCnt;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
         int N = Integer.parseInt(br.readLine());
         dp = new int[N + 1];
+        memo = new int[N + 1];  // 메모이제이션 배열 초기화
         nomarlCnt = 1;
         dpCnt = 0;
-        fibonacci(N);
-        fibonacciDp(N);
-        System.out.print(nomarlCnt + " " + dpCnt);
-
+        System.out.print(fibonacciDp(N) + " " + dpCnt);
     }
 
-    static int fibonacci(int n) {
-        if (n == 1 || n == 2) {
-            return 1;
-        }
-        nomarlCnt++;
-        return fibonacci(n - 1) + fibonacci(n - 2);
-    }
 
+
+    // DP를 활용한 피보나치 계산
     static int fibonacciDp(int n) {
-        if (n == 1 || n == 2) {
-            return 1;
-        }
+        dp[1] = dp[2] = 1;  // 초기 값 설정
 
         for (int i = 3; i <= n; i++) {
             dp[i] = dp[i - 1] + dp[i - 2];
