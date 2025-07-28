@@ -1,28 +1,25 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	static int N,M;
-	static StringBuilder sb = new StringBuilder();
 	static StringTokenizer st;
+	static StringBuilder sb = new StringBuilder();
+	static int N,M;
+	static Map<Integer,Integer> map = new HashMap<>();
 	
 	public static void main(String[] args) throws IOException {
 		N = Integer.parseInt(br.readLine());
-		HashMap<Integer, Integer> map = new HashMap<>();
 		st = new StringTokenizer(br.readLine());
 		for(int i=0; i<N; i++) {
-			int num = Integer.parseInt(st.nextToken());
-			map.put(num, map.getOrDefault(num, 0)+1);
+			int key = Integer.parseInt(st.nextToken());
+			map.put(key, map.getOrDefault(key, 0)+1);
 		}
 		M = Integer.parseInt(br.readLine());
 		st = new StringTokenizer(br.readLine());
 		for(int i=0; i<M; i++) {
-			int query = Integer.parseInt(st.nextToken());
-			sb.append(map.getOrDefault(query, 0)).append(" ");
+			int key = Integer.parseInt(st.nextToken());
+			sb.append(map.getOrDefault(key, 0)).append(' ');
 		}
 		System.out.println(sb);
 	}
