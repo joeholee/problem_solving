@@ -2,13 +2,18 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	static class Document{
+	static class Document implements Comparable<Document> {
 		int idx;
 		int priority;
 		
 		Document(int idx, int priority) {
 			this.idx=idx;
 			this.priority=priority;
+		}
+		
+		@Override
+		public int compareTo(Document doc) {
+			return doc.priority - this.priority;
 		}
 	}
 	
@@ -24,17 +29,18 @@ public class Main {
 			N = Integer.parseInt(st.nextToken());
 			M = Integer.parseInt(st.nextToken());
 			Deque<Document> dq = new ArrayDeque<>();
-			PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+			PriorityQueue<Document> pq = new PriorityQueue<>();
 			st = new StringTokenizer(br.readLine());
 			for(int i=0; i<N; i++) {
 				int priority = Integer.parseInt(st.nextToken());
-				dq.offer(new Document(i,priority));
-				pq.offer(priority);
+				Document doc = new Document(i,priority);
+				dq.offer(doc);
+				pq.offer(doc);
 			}
 			int cnt=0;
 			while(!dq.isEmpty()) {
 				Document doc = dq.poll();
-				if(doc.priority==pq.peek()) {
+				if(doc.priority==pq.peek().priority) {
 					cnt++;
 					pq.poll();
 					if(doc.idx==M) {
