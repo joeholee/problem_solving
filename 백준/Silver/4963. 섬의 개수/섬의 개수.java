@@ -1,54 +1,56 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.util.Queue;
-import java.util.LinkedList;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-	static int w,h,ans;
-	static int[] cur;
-	static int[][] map;
-	static boolean[][] vis;
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static StringTokenizer st;
+	static StringBuilder sb = new StringBuilder();
+	static int w,h,cnt;
 	static int[] dr = {-1,-1,-1,0,1,1,1,0};
 	static int[] dc = {-1,0,1,1,1,0,-1,-1};
- 	static Queue<int[]> q = new LinkedList<>();
-	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static int[][] map;
+	static boolean[][] vis;
 	
 	public static void main(String[] args) throws IOException {
 		while(true) {
-			String[] size = br.readLine().split(" ");
-			w = Integer.parseInt(size[0]);
-			h = Integer.parseInt(size[1]);
-			if(w==0 && h==0) return;
+			st = new StringTokenizer(br.readLine());
+			w = Integer.parseInt(st.nextToken());
+			h = Integer.parseInt(st.nextToken());
+			if(w==0&&h==0) break;
 			map = new int[h][w];
 			vis = new boolean[h][w];
+			cnt=0;
 			for(int r=0; r<h; r++) {
-				String[] row = br.readLine().split(" ");
-				for(int c=0; c<w; c++) map[r][c]=Integer.parseInt(row[c]);
+				st = new StringTokenizer(br.readLine());
+				for(int c=0; c<w; c++) map[r][c]=Integer.parseInt(st.nextToken());
 			}
 			for(int r=0; r<h; r++) {
 				for(int c=0; c<w; c++) {
-					if(!vis[r][c]&&map[r][c]==1) bfs(r,c);
+					if(map[r][c]==1&&!vis[r][c]) {
+						cnt++;
+						bfs(r,c);
+					}
 				}
 			}
-			System.out.println(ans);
-			ans=0;
+			sb.append(cnt).append('\n');
 		}
+		System.out.println(sb);
 	}
+	
 	static void bfs(int r, int c) {
+		Queue<int[]> q = new ArrayDeque<>();
 		q.add(new int[] {r,c});
 		vis[r][c]=true;
 		while(!q.isEmpty()) {
-			cur = q.poll();
+			int[] cur = q.poll();
 			for(int dir=0; dir<8; dir++) {
 				int nr = cur[0]+dr[dir];
 				int nc = cur[1]+dc[dir];
-				if(nr<0||nr>=h||nc<0||nc>=w||vis[nr][nc]) continue;
-				if(map[nr][nc]==0) continue;
-				q.add(new int[] {nr,nc});
+				if(nr<0||nr>=h||nc<0||nc>=w) continue;
+				if(map[nr][nc]==0||vis[nr][nc]) continue;
 				vis[nr][nc]=true;
+				q.add(new int[] {nr,nc});
 			}
 		}
-		ans++;
 	}
 }
