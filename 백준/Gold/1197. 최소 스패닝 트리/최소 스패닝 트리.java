@@ -4,10 +4,9 @@ import java.util.*;
 public class Main {
 	
 	static class Edge implements Comparable<Edge> {
-		int from,to,weight;
+		int to,weight;
 		
-		Edge(int from, int to, int weight) {
-			this.from=from;
+		Edge(int to, int weight) {
 			this.to=to;
 			this.weight=weight;
 		}
@@ -21,46 +20,43 @@ public class Main {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	static StringTokenizer st;
-	static int V,E,A,B,C,pick,ans;
-	static int[] p;
-	static Edge[] edges;
+	static int V,E,A,B,C,cnt;
+	static List<List<Edge>> adj = new ArrayList<>();
+	static PriorityQueue<Edge> pq = new PriorityQueue<>();
+	static boolean[] vis;
+	static long ans;
 	
 	public static void main(String[] args) throws IOException {
 		st = new StringTokenizer(br.readLine());
 		V = Integer.parseInt(st.nextToken());
 		E = Integer.parseInt(st.nextToken());
-		p = new int[V+1];
-		for(int i=1; i<=V; i++) p[i]=i;
-		edges = new Edge[E];
+		for(int i=0; i<=V; i++) adj.add(new ArrayList<>());
 		for(int i=0; i<E; i++) {
 			st = new StringTokenizer(br.readLine());
 			A = Integer.parseInt(st.nextToken());
 			B = Integer.parseInt(st.nextToken());
 			C = Integer.parseInt(st.nextToken());
-			edges[i] = new Edge(A,B,C);
+			adj.get(A).add(new Edge(B,C));
+			adj.get(B).add(new Edge(A,C));
 		}
-		Arrays.sort(edges);
-		for(int i=0; i<E; i++) {
-			int a = edges[i].from;
-			int b = edges[i].to;
-			if(findSet(a)!=findSet(b)) {
-				union(a,b);
-				ans+=edges[i].weight;
-				pick++;
-			}
-			if(pick==V-1) break;
-		}
+		vis = new boolean[V+1];
+		prim(1);
 		bw.write(ans+"");
 		bw.close();
 		br.close();
 	}
 	
-	static void union(int a, int b) {
-		p[findSet(b)] = p[a];
-	}
-	
-	static int findSet(int x) {
-		if(p[x]!=x) p[x]=findSet(p[x]);
-		return p[x];
+	static void prim(int start) {
+		pq.add(new Edge(start,0));
+		while(!pq.isEmpty() && cnt<V) {
+			Edge cur = pq.poll();
+			if(vis[cur.to]) continue;
+			vis[cur.to]=true;
+			ans+=cur.weight;
+			cnt++;
+			for(Edge e: adj.get(cur.to)) {
+				if(!vis[e.to]) pq.add(e);
+			}
+		}
 	}
 }
