@@ -4,10 +4,9 @@ import java.util.*;
 public class Main {
 	
 	static class Edge implements Comparable<Edge> {
-		int from,to,weight;
+		int to,weight;
 		
-		Edge(int from, int to, int weight) {
-			this.from = from;
+		Edge(int to, int weight) {
 			this.to = to;
 			this.weight = weight;
 		}
@@ -23,38 +22,37 @@ public class Main {
 	static StringTokenizer st;
 	static int N,cnt;
 	static long ans;
-	static int[] p;
-	static List<Edge> adj = new ArrayList<>();
+	static boolean[] vis;
+	static List<List<Edge>> adj = new ArrayList<>();
+	static PriorityQueue<Edge> pq = new PriorityQueue<>();
 	
 	public static void main(String[] args) throws IOException {
 		N = Integer.parseInt(br.readLine());
-		p = new int[N];
+		vis = new boolean[N];
 		for(int i=0; i<N; i++) {
-			p[i]=i;
+			adj.add(new ArrayList<>());
 			st = new StringTokenizer(br.readLine());
 			for(int j=0; j<N; j++) {
-				adj.add(new Edge(i,j,Integer.parseInt(st.nextToken())));
+				adj.get(i).add(new Edge(j,Integer.parseInt(st.nextToken())));
 			}
 		}
-		Collections.sort(adj);
-		for(Edge edge : adj) {
-			if(findSet(edge.from)!=findSet(edge.to)) {
-				union(edge.from, edge.to);
-				ans+=edge.weight;
-				if(++cnt==N-1) break;
-			}
-		}
+		prim(0);
 		bw.write(ans+"");
 		bw.close();
 		br.close();
 	}
 	
-	static void union(int a, int b) {
-		p[findSet(b)]=p[a];
-	}
-	
-	static int findSet(int x) {
-		if(p[x]!=x) p[x]=findSet(p[x]);
-		return p[x];
+	static void prim(int start) {
+		pq.add(new Edge(start,0));
+		while(!pq.isEmpty() && cnt<N) {
+			Edge cur = pq.poll();
+			if(vis[cur.to]) continue;
+			vis[cur.to]=true;
+			ans+=cur.weight;
+			cnt++;
+			for(Edge e : adj.get(cur.to)) {
+				if(!vis[e.to]) pq.add(e);
+			}
+		}
 	}
 }
