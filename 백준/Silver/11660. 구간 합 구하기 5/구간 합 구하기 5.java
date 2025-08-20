@@ -7,20 +7,18 @@ public class Main {
 	static StringTokenizer st;
 	static StringBuilder sb = new StringBuilder();
 	static int N,M;
-	static int[][] arr,sum;
+	static int[][] sum;
 	
 	public static void main(String[] args) throws IOException {
 		st = new StringTokenizer(br.readLine());
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
-		arr = new int[N+1][N+1];
 		sum = new int[N+1][N+1];
 		for(int r=1; r<=N; r++) {
 			st = new StringTokenizer(br.readLine());
-			for(int c=1; c<=N; c++) arr[r][c]=Integer.parseInt(st.nextToken());
-		}
-		for(int r=1; r<=N; r++) {
-			for(int c=1; c<=N; c++) sum[r][c] = sum[r-1][c]+sum[r][c-1]-sum[r-1][c-1]+arr[r][c];
+			for(int c=1; c<=N; c++) {
+				sum[r][c] = Integer.parseInt(st.nextToken())+sum[r-1][c]+sum[r][c-1]-sum[r-1][c-1];
+			}
 		}
 		for(int i=0; i<M; i++) {
 			st = new StringTokenizer(br.readLine());
