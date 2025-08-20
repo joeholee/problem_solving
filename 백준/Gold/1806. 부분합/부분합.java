@@ -1,40 +1,34 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-
-        int N = Integer.parseInt(st.nextToken()); // 배열의 크기
-        int S = Integer.parseInt(st.nextToken()); // 부분합 목표 값
-
-        st = new StringTokenizer(br.readLine());
-        int[] numbers = new int[N];
-        for (int i = 0; i < N; i++) {
-            numbers[i] = Integer.parseInt(st.nextToken());
-        }
-
-        // 투 포인터와 변수 초기화
-        int start = 0, end = 0, sum = 0, minLength = Integer.MAX_VALUE;
-
-        while (true) {
-            if (sum >= S) {
-                // 합이 S 이상인 경우, 구간 길이를 기록하고 start를 증가시켜 구간을 줄임
-                minLength = Math.min(minLength, end - start);
-                sum -= numbers[start++];
-            } else if (end == N) {
-                // end가 배열 끝에 도달하면 종료
-                break;
-            } else {
-                // 합이 S 미만인 경우, end를 증가시켜 구간을 확장
-                sum += numbers[end++];
-            }
-        }
-
-        // 결과 출력 (최소 길이가 갱신되지 않았다면 0 출력)
-        System.out.println(minLength == Integer.MAX_VALUE ? 0 : minLength);
-    }
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+	static StringTokenizer st;
+	static int N,S,l,r,sum;
+	static int[] A;
+	static int min = Integer.MAX_VALUE;
+	
+	public static void main(String[] args) throws IOException {
+		st = new StringTokenizer(br.readLine());
+		N = Integer.parseInt(st.nextToken());
+		S = Integer.parseInt(st.nextToken());
+		A = new int[N];
+		st = new StringTokenizer(br.readLine());
+		for(int i=0; i<N; i++) A[i]=Integer.parseInt(st.nextToken());
+		sum = A[0];
+		for(int l=0; l<N; l++) {
+			while(r<N && sum<S) {
+				r++;
+				if(r!=N) sum+=A[r];
+			}
+			if(r==N) break;
+			min = Math.min(min, r-l+1);
+			sum-=A[l];
+		}
+		if(min==Integer.MAX_VALUE) min=0; 
+		bw.write(min+"");
+		bw.close();
+		br.close();
+	}
 }
