@@ -23,44 +23,29 @@ public class Main {
 			char[] input = br.readLine().toCharArray();
 			for(int c=0; c<M; c++) arr[r][c] = input[c];
 		}
-		dijkstra();
+		bfs();
 		bw.write(wall[N-1][M-1]+"");
 		bw.close();
 		br.close();
 	}
 	
-	static void dijkstra() {
-		PriorityQueue<Point> pq = new PriorityQueue<>();
-		wall[0][0]=0;
-		pq.offer(new Point(0,0,0));
-		while(!pq.isEmpty()) {
-			Point cur = pq.poll();
-			if(wall[cur.r][cur.c]!=cur.cnt) continue;
+	static void bfs() {
+		Deque<int[]> dq = new ArrayDeque<>();
+		wall[0][0] = 0;
+		dq.add(new int[] {0,0});
+		while(!dq.isEmpty()) {
+			int[] cur = dq.poll();
 			for(int dir=0; dir<4; dir++) {
-				int nr = cur.r+dr[dir];
-				int nc = cur.c+dc[dir];
+				int nr = cur[0]+dr[dir];
+				int nc = cur[1]+dc[dir];
 				if(nr<0||nr>=N||nc<0||nc>=M) continue;
 				int w = (arr[nr][nc]=='1') ? 1 : 0;
-				if(wall[nr][nc]>cur.cnt+w) {
-					wall[nr][nc] = cur.cnt+w;
-					pq.offer(new Point(nr,nc,wall[nr][nc]));
+				if(wall[nr][nc]>wall[cur[0]][cur[1]]+w) {
+					wall[nr][nc]=wall[cur[0]][cur[1]]+w;
+					if(w==0) dq.addFirst(new int[] {nr,nc});
+					else dq.add(new int[] {nr,nc});
 				}
 			}
-		}
-	}
-	
-	static class Point implements Comparable<Point> {
-		int r,c,cnt;
-		
-		Point(int r, int c, int cnt) {
-			this.r = r;
-			this.c = c;
-			this.cnt = cnt;
-		}
-		
-		@Override
-		public int compareTo(Point p) {
-			return Integer.compare(cnt, p.cnt);
 		}
 	}
 }
