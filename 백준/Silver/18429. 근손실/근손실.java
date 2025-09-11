@@ -7,7 +7,7 @@ public class Main {
 	static StringTokenizer st;
 	static int N,K,ans;
 	static final int weight = 500;
-	static int[] A,tmp;
+	static int[] A;
 	static boolean[] vis;
 	
 	public static void main(String[] args) throws IOException {
@@ -15,34 +15,25 @@ public class Main {
 		N = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
 		A = new int[N];
-		tmp = new int[N];
 		vis = new boolean[N];
 		st = new StringTokenizer(br.readLine());
 		for(int i=0; i<N; i++) A[i] = Integer.parseInt(st.nextToken());
-		perm(0);
+		perm(0,weight);
 		bw.write(ans+"");
 		bw.close();
 		br.close();
 	}
 	
-	static void perm(int cnt) {
+	static void perm(int cnt, int cur) {
+		if(cur<weight) return;
 		if(cnt==N) {
-			int cur = weight;
-			boolean success = true;
-			for(int i=0; i<N; i++) {
-				cur = cur-K+tmp[i];
-				if(cur<weight) {
-					success = false;
-					break;
-				}
-			}
-			if(success) ans++;
+			ans++;
+			return;
 		}
 		for(int i=0; i<N; i++) {
 			if(!vis[i]) {
-				tmp[cnt]=A[i];
 				vis[i]=true;
-				perm(cnt+1);
+				perm(cnt+1, cur-K+A[i]);
 				vis[i]=false;
 			}
 		}
