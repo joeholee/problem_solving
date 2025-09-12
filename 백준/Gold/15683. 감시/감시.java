@@ -41,32 +41,35 @@ public class Main {
 				if(arr[r][c]>=1&&arr[r][c]<=5) cctvs.add(new CCTV(r,c,arr[r][c]));
 			}
 		}
-		dfs(0,arr);
+		dfs(0);
 		bw.write(ans+"");
 		bw.close();
 		br.close();
 	}
 	
-	static void dfs(int depth, int[][] arr) {
+	static void dfs(int depth) {
 		if(depth==cctvs.size()) {
 			ans = Math.min(ans, count(arr));
 			return;
 		}
 		CCTV cur = cctvs.get(depth);
 		for(int[] dir : dirs[cur.type]) {
-			int[][] copy = new int[N][M];
-			for(int i=0; i<N; i++) copy[i] = arr[i].clone();
-			for(int d : dir) watch(cur.r,cur.c,d,copy);
-			dfs(depth+1,copy);
+			List<int[]> li = new ArrayList<>();
+			for(int d : dir) watch(cur.r,cur.c,d,li,arr);
+			dfs(depth+1);
+			for(int[] c : li) arr[c[0]][c[1]]=0;
 		}
 	}
 	
-	static void watch(int r, int c, int d, int[][] arr) {
+	static void watch(int r, int c, int d, List<int[]> li, int[][] arr) {
 		int nr = r+dr[d];
 		int nc = c+dc[d];
 		while(nr>=0&&nr<N&&nc>=0&&nc<M) {
 			if(arr[nr][nc]==6) break;
-			if(arr[nr][nc]==0) arr[nr][nc]=-1;
+			if(arr[nr][nc]==0) {
+				arr[nr][nc]=-1;
+				li.add(new int[] {nr,nc});
+			}
 			nr+=dr[d];
 			nc+=dc[d];
 		}
