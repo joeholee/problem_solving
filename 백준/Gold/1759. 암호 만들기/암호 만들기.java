@@ -18,33 +18,26 @@ public class Main {
 		st = new StringTokenizer(br.readLine());
 		for(int i=0; i<C; i++) arr[i] = st.nextToken().charAt(0);
 		Arrays.sort(arr);
-		dfs(0,0);
+		dfs(0,0,0,0);
 		bw.write(sb.toString());
 		bw.close();
 		br.close();
 	}
 	
-	static void dfs(int idx, int depth) {
+	static void dfs(int idx, int depth, int v, int c) {
+		if(v+(C-idx)<1) return;
+		if(c+(C-idx)<2) return;
 		if(depth==L) {
-			if(check()) {
-				for(char c : cand) sb.append(c);
+			if(v>=1&&c>=2) {
+				for(char ch : cand) sb.append(ch);
 				sb.append('\n');
 			}
 			return;
 		}
 		for(int i=idx; i<C; i++) {
 			cand[depth]=arr[i];
-			dfs(i+1,depth+1);
+			if(arr[i]=='a'||arr[i]=='e'||arr[i]=='i'||arr[i]=='o'||arr[i]=='u') dfs(i+1,depth+1,v+1,c);
+			else dfs(i+1,depth+1,v,c+1);
 		}
-	}
-	
-	static boolean check() {
-		int v=0,c=0;
-		for(char ch : cand) {
-			if(ch=='a'||ch=='e'||ch=='i'||ch=='o'||ch=='u') v++;
-			else c++;
-		}
-		if(v<1||c<2) return false;
-		return true;
 	}
 }
