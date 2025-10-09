@@ -14,6 +14,9 @@ public class Main {
 		N = Integer.parseInt(br.readLine());
 		for(int i=0; i<N; i++) {
 			S = br.readLine();
+			char[] chars = S.toCharArray();
+			Arrays.sort(chars);
+			S = new String(chars);
 			vis = new boolean[S.length()];
 			perm(0,"");
 			for(String str : s) sb.append(str).append('\n');
@@ -29,11 +32,10 @@ public class Main {
 			s.add(cur);
 			return;
 		}
-		boolean[] used = new boolean[26];
 		for(int i=0; i<S.length(); i++) {
-			if(!vis[i]&&!used[S.charAt(i)-'a']) {
+			if(i>0&&S.charAt(i)==S.charAt(i-1)&&!vis[i-1]) continue;
+			if(!vis[i]) {
 				vis[i]=true;
-				used[S.charAt(i)-'a']=true;
 				perm(cnt+1,cur+S.charAt(i));
 				vis[i]=false;
 			}
