@@ -3,16 +3,20 @@ import java.util.*;
 
 public class Main {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	static int K,sum;
-	static Deque<Integer> stack = new ArrayDeque<>();
+	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+	static int K,ans;
+	static Deque<Integer> st = new ArrayDeque<>();
+	
 	public static void main(String[] args) throws IOException {
 		K = Integer.parseInt(br.readLine());
 		while(K-->0) {
-			int val = Integer.parseInt(br.readLine());
-			if(val==0) stack.pop();
-			else stack.push(val);
+			int cur = Integer.parseInt(br.readLine());
+			if(cur==0) st.pop();
+			else st.push(cur);
 		}
-		while(!stack.isEmpty()) sum+=stack.pop();
-		System.out.println(sum);
+		while(!st.isEmpty()) ans+=st.pop();
+		bw.write(ans+"");
+		bw.close();
+		br.close();
 	}
 }
