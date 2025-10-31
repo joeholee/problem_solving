@@ -5,8 +5,7 @@ public class Main {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	static StringTokenizer st;
-	static int N,M,l,r;
-	static int min = Integer.MAX_VALUE;
+	static int N,M,diff,ans=Integer.MAX_VALUE;
 	static int[] A;
 	
 	public static void main(String[] args) throws IOException {
@@ -14,14 +13,17 @@ public class Main {
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		A = new int[N];
-		for(int i=0; i<N; i++) A[i]=Integer.parseInt(br.readLine());
+		for(int i=0; i<N; i++) A[i] = Integer.parseInt(br.readLine());
 		Arrays.sort(A);
-		for(int l=0; l<N; l++) {
-			while(r<N && A[r]-A[l]<M) r++;
-			if(r==N) break;
-			min = Math.min(min, A[r]-A[l]);
+		int st=0,en=0;
+		while(st<=en&&en<A.length) {
+			diff = A[en]-A[st];
+			if(diff>=M) {
+				ans = Math.min(ans, diff);
+				st++;
+			} else en++;
 		}
-		bw.write(min+"");
+		bw.write(ans+"");
 		bw.close();
 		br.close();
 	}
