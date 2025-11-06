@@ -1,23 +1,26 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.io.*;
 
 public class Main {
-    static long[] dp;
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-        int N = Integer.parseInt(br.readLine());
-        dp = new long[101];
-        Arrays.fill(dp, 1);
-        for (int i = 4; i < 101; i++) {
-            dp[i] = dp[i - 2] + dp[i - 3];
-        }
-        for (int i = 0; i < N; i++) {
-            sb.append(dp[Integer.parseInt(br.readLine())]).append("\n");
-        }
-        System.out.print(sb);
-        
-    }
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+	static StringBuilder sb = new StringBuilder();
+	static int T,N;
+	static long[] P;
+	
+	public static void main(String[] args) throws IOException {
+		T = Integer.parseInt(br.readLine());
+		for(int t=0; t<T; t++) {
+			N = Integer.parseInt(br.readLine());
+			P = new long[N+1];
+			P[1] = 1;
+			if(N>=2) P[2] = 1;
+			if(N>=3) {
+				for(int i=3; i<=N; i++) P[i] = P[i-3]+P[i-2];
+			}
+			sb.append(P[N]).append('\n');
+		}
+		bw.write(sb.toString());
+		bw.close();
+		br.close();
+	}
 }
