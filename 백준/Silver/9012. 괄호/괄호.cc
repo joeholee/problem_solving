@@ -5,14 +5,13 @@ string S;
 bool solve(string S) {
     stack<char> st;
     for(char c : S) {
-        if(!st.empty()) {
-            auto cur = st.top();
-            if(cur=='('&&c==')') st.pop();
-            else st.push(c);
-        } else st.push(c);
+        if(c=='(') st.push(c);
+        else {
+            if(st.empty()) return false;
+            st.pop();
+        }
     }
-    if(st.empty()) return true;
-    return false;
+    return st.empty();
 }
 int main() {
     ios_base::sync_with_stdio(0); cin.tie(0);
