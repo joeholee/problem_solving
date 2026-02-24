@@ -2,50 +2,22 @@
 using namespace std;
 #define Y first
 #define X second
-int N,L,R,ret,A[101][101],vis[101][101];
-bool canMove;
+int N,L,R,sum,ret,A[51][51],vis[51][51];
+vector<pair<int,int>> v;
 const int dr[] = {-1,0,1,0};
 const int dc[] = {0,1,0,-1};
-static void bfs(int r, int c) {
-    queue<pair<int,int>> q;
-    vector<pair<int,int>> v;
-    q.push({r,c});
-    vis[r][c]=true;
-    v.push_back({r,c});
-    while(!q.empty()) {
-        auto cur = q.front(); q.pop();
-        for(int dir=0; dir<4; dir++) {
-            int nr=cur.Y+dr[dir];
-            int nc=cur.X+dc[dir];
-            if(nr<0||nr>=N||nc<0||nc>=N) continue;
-            if(vis[nr][nc]) continue;
-            int diff = abs(A[cur.Y][cur.X]-A[nr][nc]);
-            if(L<=diff&&diff<=R) {
-                q.push({nr,nc});
-                vis[nr][nc]=true;
-                canMove=true;
-                v.push_back({nr,nc});
-            }
+void dfs(int r, int c, vector<pair<int,int>> &v) {
+    for(int dir=0; dir<4; dir++) {
+        int nr=r+dr[dir];
+        int nc=c+dc[dir];
+        if(nr<0||nr>=N||nc<0||nc>=N||vis[nr][nc]) continue;
+        int diff=abs(A[r][c]-A[nr][nc]);
+        if(diff>=L&&diff<=R) {
+            vis[nr][nc]=1;
+            v.push_back({nr,nc});
+            sum+=A[nr][nc];
+            dfs(nr,nc,v);
         }
-    }
-    if(canMove) {
-        int sum=0;
-        for(int i=0; i<v.size(); i++) sum+=A[v[i].Y][v[i].X];
-        int avg=sum/v.size();
-        for(int i=0; i<v.size(); i++) A[v[i].Y][v[i].X]=avg;
-    }
-}
-static void solve() {
-    while(true) {
-        canMove=false;
-        memset(vis,0,sizeof(vis));
-        for(int r=0; r<N; r++) {
-            for(int c=0; c<N; c++) {
-                if(!vis[r][c]) bfs(r,c);
-            }
-        }
-        if(!canMove) break;
-        ret++;
     }
 }
 int main() {
@@ -53,7 +25,28 @@ int main() {
     for(int r=0; r<N; r++) {
         for(int c=0; c<N; c++) cin >> A[r][c];
     }
-    solve();
+    while(true) {
+        bool flag=0;
+        memset(vis,0,sizeof(vis));
+        for(int r=0; r<N; r++) {
+            for(int c=0; c<N; c++) {
+                if(!vis[r][c]) {
+                    v.clear();
+                    vis[r][c]=1;
+                    v.push_back({r,c});
+                    sum=A[r][c];
+                    dfs(r,c,v);
+                    if(v.size()==1) continue;
+                    for(auto i : v) {
+                        A[i.Y][i.X]=sum/v.size();
+                        flag=1;
+                    }
+                }
+            }
+        }
+        if(!flag) break;
+        ret++;
+    }
     cout << ret << '\n';
     return 0;
 }
