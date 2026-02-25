@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
-int N,K,dist[100001],pre[100001];
+int N,K,dist[200002],pre[200002];
 queue<int> q;
-stack<int> st;
+vector<int> v;
 int main() {
     ios_base::sync_with_stdio(0); cin.tie(0);
     cin >> N >> K;
@@ -23,16 +23,10 @@ int main() {
             q.push(nxt);
         }
     }
-    st.push(K);
-    int tmp=K;
-    while(tmp!=N) {
-        tmp=pre[tmp];
-        st.push(tmp);
-    }
+    for(int i=K; i!=N; i=pre[i]) v.push_back(i);
+    v.push_back(N);
+    reverse(v.begin(),v.end());
     cout << dist[K] << '\n';
-    while(!st.empty()) {
-        int val=st.top(); st.pop();
-        cout << val << ' ';
-    }
+    for(int i : v) cout << i << ' ';
     return 0;
 }
