@@ -8,6 +8,10 @@ vector<pair<int,int>> s;
 queue<pair<int,int>> wq,nwq,sq,nsq;
 const int dr[] = {-1,0,1,0};
 const int dc[] = {0,1,0,-1};
+void clearQ(queue<pair<int,int>> &v) {
+    queue<pair<int,int>> tmp;
+    swap(v,tmp);
+}
 int main() {
     ios_base::sync_with_stdio(0); cin.tie(0);
     cin >> R >> C;
@@ -62,8 +66,8 @@ int main() {
         }
         sq=nsq;
         wq=nwq;
-        while(!nsq.empty()) nsq.pop();
-        while(!nwq.empty()) nwq.pop();
+        clearQ(nsq);
+        clearQ(nwq);
         ret++;
     }
     cout << ret << '\n';
