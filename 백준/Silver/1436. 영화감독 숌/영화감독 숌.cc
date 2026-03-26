@@ -6,8 +6,8 @@ int main() {
     cin >> N;
     for(ret=666; ; ret++) {
         if(to_string(ret).find("666")!=-1) N--;
-        if(N==0) break;
+        if(!N) break;
     }
-    cout << ret << '\n';
+    cout << ret;
     return 0;
 }
