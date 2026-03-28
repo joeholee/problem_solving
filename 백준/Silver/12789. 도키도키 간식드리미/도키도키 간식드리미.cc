@@ -7,20 +7,12 @@ int main() {
     cin >> N;
     for(int i=0; i<N; i++) {
         cin >> x;
-        if(x==cur) {
-            cur++;
-            while(st.size()&&st.top()==cur) {
-                cur++;
-                st.pop();
-            }
-        }
-        else if(st.size()&&st.top()==cur) {
-            while(st.top()==cur) {
-                cur++;
-                st.pop();
-            }
-        }
+        if(x==cur) cur++;
         else st.push(x);
+        while(st.size()&&st.top()==cur) {
+            cur++;
+            st.pop();
+        }
     }
     cout << (st.empty() ? "Nice" : "Sad") << '\n';
     return 0;
