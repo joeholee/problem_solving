@@ -10,9 +10,9 @@ int main() {
         v.push_back({a,t});
     }
     sort(v.begin(),v.end());
-    ret=v[0].first;
-    for(int i=0; i<N; i++) {
-        if(ret<=v[i].first) ret=v[i].first;
+    ret=v[0].first+v[0].second;
+    for(int i=1; i<N; i++) {
+        ret=max(ret,v[i].first);
         ret+=v[i].second;
     }
     cout << ret;
