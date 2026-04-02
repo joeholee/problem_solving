@@ -1,16 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
-int n,x,ret,arr[2000001];
+int n,x,ret;
 int main() {
     ios_base::sync_with_stdio(0); cin.tie(0);
     cin >> n;
-    while(n--) {
-        cin >> x;
-        arr[x]++;
-    }
+    vector<int> a(n);
+    for(int i=0; i<n; i++) cin >> a[i];
     cin >> x;
-    for(int i=1; i<(x+1)/2; i++) {
-        if(arr[i]&&arr[x-i]) ret++;
+    sort(a.begin(),a.end());
+    int i=0,j=n-1;
+    while(i<j) {
+        if(a[i]+a[j]>=x) {
+            if(a[i]+a[j]==x) ret++;
+            j--;
+        } else i++;
     }
     cout << ret;
     return 0;
