@@ -2,11 +2,11 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	static int N,cur,ans;
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	static StringTokenizer st;
-	static int[][] time;
-	
+	static StringBuilder sb = new StringBuilder();
+	static int N,cur,ret,time[][];
 	public static void main(String[] args) throws IOException {
 		N = Integer.parseInt(br.readLine());
 		time = new int[N][2];
@@ -15,19 +15,18 @@ public class Main {
 			time[i][0] = Integer.parseInt(st.nextToken());
 			time[i][1] = Integer.parseInt(st.nextToken());
 		}
-		Arrays.sort(time, (o1, o2) -> {
-			if(o1[1]==o2[1]) {
-				return o1[0]-o2[0];
-			} else {
-				return o1[1]-o2[1];
-			}
+		Arrays.sort(time, (o1,o2) -> {
+			if(o1[1]==o2[1]) return Integer.compare(o1[0], o2[0]);
+			else return Integer.compare(o1[1], o2[1]);
 		});
 		for(int i=0; i<N; i++) {
 			if(cur<=time[i][0]) {
-				cur = time[i][1];
-				ans++;
+				ret++;
+				cur=time[i][1];
 			}
 		}
-		System.out.println(ans);
+		bw.write(ret+"");
+		bw.close();
+		br.close();
 	}
 }
