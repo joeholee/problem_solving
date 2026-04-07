@@ -1,12 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 int N,S[21][21],ret=987654321;
-int calc(int mask) {
-    int tmp1=0,tmp2=0;
-    for(int i=0; i<N; i++) {
-        for(int j=i+1; j<N; j++) {
-            if(mask&(1<<i)&&mask&(1<<j)) tmp1+=S[i][j]+S[j][i];
-            else if(!(mask&(1<<i))&&!(mask&(1<<j))) tmp2+=S[i][j]+S[j][i];
+int calc(vector<int> &a, vector<int> &b) {
+    int tmp1=0, tmp2=0;
+    for(int i=0; i<N/2; i++) {
+        for(int j=i+1; j<N/2; j++) {
+            tmp1+=S[a[i]][a[j]]+S[a[j]][a[i]];
+            tmp2+=S[b[i]][b[j]]+S[b[j]][b[i]];
         }
     }
     return abs(tmp1-tmp2);
@@ -18,13 +18,13 @@ int main() {
         for(int c=0; c<N; c++) cin >> S[r][c];
     }
     for(int i=0; i<(1<<N); i++) {
-        int cnt=0;
+        if(__builtin_popcount(i)!=N/2) continue;
+        vector<int> start,link;
         for(int j=0; j<N; j++) {
-            if(i&(1<<j)) cnt++;
+            if(i&(1<<j)) start.push_back(j);
+            else link.push_back(j);
         }
-        if(cnt==N/2) {
-            ret=min(ret,calc(i));
-        }
+        ret=min(ret,calc(start,link));
     }
     cout << ret;
     return 0;
