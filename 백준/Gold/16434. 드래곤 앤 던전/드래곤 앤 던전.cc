@@ -1,34 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
-ll N,atk,ret,t[123457],a[123457],h[123457];
-bool check(ll mid) {
-    ll mx=mid;
-    ll cur_atk=atk;
-    for(int i=0; i<N; i++) {
-        if(t[i]==1) {
-            ll cnt=h[i]/cur_atk+(h[i]%cur_atk ? 1 : 0);
-            mid-=(cnt-1)*a[i];
-        } else {
-            mid=min(mx,mid+h[i]);
-            cur_atk+=a[i];
-        }
-        if(mid<=0) return false;
-    }
-    return true;
-}
+ll N,atk,ret,t,a,h,cur,dam,mx;
 int main() {
     ios_base::sync_with_stdio(0); cin.tie(0);
     cin >> N >> atk;
-    for(int i=0; i<N; i++) cin >> t[i] >> a[i] >> h[i];
-    ll lo=1, hi=1e18;
-    while(lo<=hi) {
-        ll mid=(lo+hi)/2;
-        if(check(mid)) {
-            ret=mid;
-            hi=mid-1;
-        } else lo=mid+1;
+    for(int i=0; i<N; i++) {
+        cin >> t >> a >> h;
+        if(t==1) {
+            dam=a*(ceil((double)h/atk)-1);
+            if(cur<dam) {
+                mx+=dam-cur;
+                cur=0;
+            } else cur-=dam;
+        } else {
+            atk+=a;
+            cur=min(mx,cur+h);
+        }
     }
-    cout << ret;
+    cout << mx+1;
     return 0;
 }
