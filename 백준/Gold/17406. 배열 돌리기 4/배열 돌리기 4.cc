@@ -1,12 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
-int N,M,K,A[51][51],ret=5000;
+int N,M,K,A[51][51],vis[7],ret=5000;
 struct Info {
     int r,c,s;
 };
 vector<Info> v;
 vector<int> ord;
-bool visited[7];
 void rotate(int r, int c, int s) {
     int tmp[51][51];
     memcpy(tmp,A,sizeof(A));
@@ -24,31 +23,26 @@ void dfs() {
     if(ord.size()==K) {
         int tmp[51][51];
         memcpy(tmp,A,sizeof(A));
-
         for(int i : ord) {
-            rotate(v[i].r, v[i].c, v[i].s);
+            rotate(v[i].r,v[i].c,v[i].s);
         }
-
         for(int r=0; r<N; r++) {
             int sum=0;
             for(int c=0; c<M; c++) sum+=A[r][c];
             ret=min(ret,sum);
         }
-
         memcpy(A,tmp,sizeof(tmp));
         return;
     }
-
     for(int i=0; i<K; i++) {
-        if(visited[i]) continue;
-        visited[i]=1;
+        if(vis[i]) continue;
+        vis[i]=1;
         ord.push_back(i);
         dfs();
         ord.pop_back();
-        visited[i]=0;
+        vis[i]=0;
     }
 }
-
 int main() {
     ios_base::sync_with_stdio(0); cin.tie(0);
     cin >> N >> M >> K;
@@ -60,9 +54,7 @@ int main() {
         cin >> r >> c >> s;
         v.push_back({r-1,c-1,s});
     }
-
     dfs();
-
     cout << ret;
     return 0;
 }
