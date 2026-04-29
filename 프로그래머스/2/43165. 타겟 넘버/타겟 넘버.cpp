@@ -1,19 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
-int tar,ret;
-vector<int> v;
-void dfs(int idx, int sum) {
-    if(idx==v.size()) {
-        if(sum==tar) ret++;
-        return;
+
+int dfs(int cnt, int sum, vector<int> &numbers, int target) {
+    if(cnt==numbers.size()) {
+        if(sum==target) return 1;
+        return 0;
     }
-    dfs(idx+1,sum+v[idx]);
-    dfs(idx+1,sum-v[idx]);
+    return dfs(cnt+1,sum+numbers[cnt],numbers,target)+dfs(cnt+1,sum-numbers[cnt],numbers,target);
 }
 
 int solution(vector<int> numbers, int target) {
-    v=numbers;
-    tar=target;
-    dfs(0,0);
-    return ret;
+    int answer = 0;
+    answer=dfs(0,0,numbers,target);
+    return answer;
 }
