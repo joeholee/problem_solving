@@ -1,6 +1,4 @@
 -- 코드를 입력하세요
-SELECT *
-FROM FOOD_PRODUCT
-GROUP BY PRICE
-ORDER BY PRICE DESC
-LIMIT 1;
+select *
+from food_product
+where price = (select max(price) from food_product);
